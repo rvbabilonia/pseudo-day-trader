@@ -1,0 +1,35 @@
+plugins {
+  id 'java'
+}
+
+java {
+  sourceCompatibility = JavaVersion.VERSION_1_8
+  targetCompatibility = JavaVersion.VERSION_1_8
+}
+
+group = 'nz.co.pseudodaytracker'
+version = '1.0.0'
+
+logger.quiet "Running Java version: " + System.properties['java.vm.vendor'] + " " + System.properties['java.vm.name'] + " " + System.properties['java.version']
+logger.quiet "Running Gradle version: $gradle.gradleVersion"
+
+repositories {
+  mavenCentral()
+}
+
+ext {
+  assertjVersion = '3.16.1'
+  junitJupiterVersion = '5.6.2'
+}
+
+dependencies {
+  testImplementation "org.assertj:assertj-core:$assertjVersion"
+  testImplementation "org.junit.jupiter:junit-jupiter:$junitJupiterVersion"
+}
+
+tasks.withType(Test) {
+  useJUnitPlatform()
+  testLogging {
+    events "passed", "skipped", "failed"
+  }
+}
